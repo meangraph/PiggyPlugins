@@ -181,10 +181,6 @@ class LizardmanShamanOverlay extends Overlay
         NPC spawn = (NPC) actor;
         int animationID = EthanApiPlugin.getAnimation(spawn);
 
-        if (spawn.getName().equals("Spawn"))
-        {
-            System.out.println("Spawn ID " + spawn.getId() + " Spawn Name " + spawn.getName() + " Animation ID: " + animationID);
-        }
         return animationID == NPC_ID_EXPLOSION;
     }
 
