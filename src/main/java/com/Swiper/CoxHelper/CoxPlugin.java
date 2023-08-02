@@ -378,87 +378,12 @@ public class CoxPlugin extends Plugin
             this.olm.update();
         }
 
-        List<Integer> currentNpcIds;
-        updateNpcsInTheArea();
-
-        if (this.getCurrentRoomType() == CoxUtil.MYSTICS)
-        //TODO: wheelchairMystics()
-        {
-            currentNpcIds = roomNpcs.get("Mystics");
-            if (checkForNpcs(currentNpcIds))
-            {
-                toPrayOverhead = Prayer.PROTECT_FROM_MAGIC;
-                toPrayBoost = Prayer.RIGOUR;
-            }
-            else
-            {
-                toPrayOverhead = null;
-                toPrayBoost = null;
-            }
-        }
-        else if (this.getCurrentRoomType() == CoxUtil.TEKTON)
-        //TODO: wheelchairTekton()
-        {
-            currentNpcIds = roomNpcs.get("Tekton");
-            if (checkForNpcs(currentNpcIds))
-            {
-                toPrayOverhead = Prayer.PROTECT_FROM_MELEE;
-                toPrayBoost = Prayer.PIETY;
-            }
-            else
-            {
-                toPrayOverhead = null;
-                toPrayBoost = null;
-            }
-        }
-        else if (this.getCurrentRoomType() == CoxUtil.VANGUARDS && checkForNpcs(roomNpcs.get("Vanguards")))
-        {
-            //TODO: wheelchairVanguards()
-        }
-        else if (this.getCurrentRoomType() == CoxUtil.VESPULA && checkForNpcs(roomNpcs.get("Vespula")))
-        {
-            //TODO: wheelchairVespula()
-        }
-        else if (this.getCurrentRoomType() == CoxUtil.VASA && checkForNpcs(roomNpcs.get("Vasa")))
-        {
-            //TODO: wheelchairVasa()
-        }
-
-        else if (this.getCurrentRoomType() == CoxUtil.GUARDIANS)
-        {
-            //TODO: wheelchairGuardians()
-        }
-
-        else if (this.getCurrentRoomType() == CoxUtil.MUTTADILES)
-        {
-            //TODO: wheelchairMuttadiles()
-        }
-
-        else if (this.getCurrentRoomType() == CoxUtil.ICE_DEMON)
-        {
-            //TODO: wheelchairMuttadiles
-        }
-
-        else if (this.getCurrentRoomType() == CoxUtil.TIGHTROPE)
-        {
-            //TODO: wheelchairTightrope()
-        }
-
-        else if (this.getCurrentRoomType() == CoxUtil.CRABS)
-        {
-            //TODO: wheelchairCrabs()
-        }
-
-        else if (this.getCurrentRoomType() == CoxUtil.SHAMANS)
-        {
-            //TODO: wheelchairShamans()
-        }
-        if (!PrayerUtil.isPrayerActive(toPrayOverhead) || toPrayOverhead != null)
+        if (toPrayOverhead != null && !PrayerUtil.isPrayerActive(toPrayOverhead) && config.olmAutoPrayers())
         {
             PrayerUtil.togglePrayer(toPrayOverhead);
         }
 
-        if (!PrayerUtil.isPrayerActive(toPrayBoost) || toPrayBoost != null)
+        if (toPrayBoost != null && !PrayerUtil.isPrayerActive(toPrayBoost))
         {
             PrayerUtil.togglePrayer(toPrayBoost);
         }

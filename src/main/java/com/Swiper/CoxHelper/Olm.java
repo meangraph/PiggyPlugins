@@ -252,8 +252,7 @@ public class Olm
             return;
         }
 
-        OlmAnimation currentAnimation = OlmAnimation.fromId(((DynamicObject) hand.getRenderable()).getAnimation().getId());
-
+        OlmAnimation currentAnimation = OlmAnimation.fromId(((DynamicObject) head.getRenderable()).getAnimation().getId());
 
         if (currentAnimation == headAnimation)
         {
