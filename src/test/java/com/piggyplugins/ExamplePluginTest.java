@@ -1,6 +1,8 @@
 package com.piggyplugins;
 
+import com.Swiper.CoxHelper.CoxPlugin;
 import com.Swiper.LizardmanShaman.LizardmanShamanPlugin;
+import com.piggyplugins.AoeWarn.AoeWarningPlugin;
 import com.piggyplugins.AutoJugHumidifier.AutoJugHumidifierPlugin;
 import com.piggyplugins.AutoRifts.AutoRiftsPlugin;
 import com.piggyplugins.CannonReloader.CannonReloaderPlugin;
@@ -29,7 +31,7 @@ public class ExamplePluginTest {
                 ItemCombinerPlugin.class, RooftopAgilityPlugin.class, JadAutoPrayersPlugin.class,
                 SpeedDartMakerPlugin.class, OneTickSwitcherPlugin.class, AutoRiftsPlugin.class,
                 PrayAgainstPlayerPlugin.class, PowerSkillerPlugin.class, AutoJugHumidifierPlugin.class,
-                CannonReloaderPlugin.class, SixHourLogPlugin.class, LizardmanShamanPlugin.class);
+                CannonReloaderPlugin.class, SixHourLogPlugin.class, LizardmanShamanPlugin.class, CoxPlugin.class, AoeWarningPlugin.class);
         RuneLite.main(args);
     }
 }
