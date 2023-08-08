@@ -1,5 +1,6 @@
 package com.piggyplugins;
 
+import com.Swiper.OneClickRunEnable.OneClickRunEnablePlugin;
 import com.piggyplugins.AutoJugHumidifier.AutoJugHumidifierPlugin;
 import com.piggyplugins.AutoRifts.AutoRiftsPlugin;
 import com.piggyplugins.CannonReloader.CannonReloaderPlugin;
@@ -30,7 +31,7 @@ public class ExamplePluginTest {
                 SpeedDartMakerPlugin.class, OneTickSwitcherPlugin.class, AutoRiftsPlugin.class,
                 PrayAgainstPlayerPlugin.class, PowerSkillerPlugin.class, AutoJugHumidifierPlugin.class,
                 CannonReloaderPlugin.class, SixHourLogPlugin.class, VardorvisHelperPlugin.class,
-                ShiftClickWalkerPlugin.class);
+                ShiftClickWalkerPlugin.class, OneClickRunEnablePlugin.class);
         RuneLite.main(args);
     }
 }
