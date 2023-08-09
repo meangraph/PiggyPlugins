@@ -47,7 +47,6 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.plugins.Plugin;
-import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.util.Text;
@@ -70,9 +69,6 @@ import static com.Swiper.CoxHelper.Utils.CoxUtil.getroom_type;
         description = "All-in-one plugin for Chambers of Xeric with Auto Olm Prayers - Ported from OpenOSRS by Swiper",
         tags = {"CoX", "chamber", "xeric", "helper"}
 )
-@PluginDependency(EthanApiPlugin.class)
-@PluginDependency(PacketUtilsPlugin.class)
-@PluginDependency(PiggyUtilsPlugin.class)
 @Slf4j
 @Getter(AccessLevel.PACKAGE)
 public class CoxPlugin extends Plugin

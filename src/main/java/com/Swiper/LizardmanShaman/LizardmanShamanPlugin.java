@@ -40,7 +40,6 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.plugins.Plugin;
-import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.OverlayManager;
 
@@ -50,7 +49,6 @@ import net.runelite.client.ui.overlay.OverlayManager;
         tags = {"lizardman", "shaman", "lizard"},
         enabledByDefault = false
 )
-@PluginDependency(EthanApiPlugin.class)
 @Slf4j
 @Singleton
 public class LizardmanShamanPlugin extends Plugin
