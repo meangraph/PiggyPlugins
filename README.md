@@ -1,4 +1,4 @@
-Fork of Fork PiggyPlugins which is a fork of EthanVann's EthanApiPlugin
+Fork of PiggyPlugins which is a fork of EthanVann's EthanApiPlugin
 
 
 # PiggyPlugins Discord
@@ -15,6 +15,6 @@ https://discord.gg/kwYBYEg4uu
 # Instructions
 - Download the latest `swiper-plugins-0.*`Jar from [HERE](https://github.com/meangraph/PiggyPlugins/releases/tag/pre-release) and place it into your *sideloaded-plugins* folder
 
-*Requires either `piggy-plugins-no-ethan-0.*.jar` +  `ethans-api-0.*.jar`  Or  `piggy-plugins-aio-0.6.jar` in your `sideloaded-plugins` folder.*
+*Requires either `piggy-plugins-no-ethan-0.*.jar` +  `ethans-api-0.*.jar`  Or  `piggy-plugins-aio-0.*.jar` in your `sideloaded-plugins` folder.*
 
 
