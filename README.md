@@ -1,33 +1,20 @@
-Fork of EthanVann's EthanApiPlugin
+Fork of Fork PiggyPlugins which is a fork of EthanVann's EthanApiPlugin
 
-Automation plugins for runelite
 
-# Discord
+# PiggyPlugins Discord
 https://discord.gg/kwYBYEg4uu
 
-# Release 0.6
-*Updated 8/6/2023 7:57 PM EST*
+
+# Release 0.1
+*Updated 10/AUG/2023*
 
 **Plugins**:
-- ChinBreakHandler *(made by Owain - modified to work with runelite)*
-- SpeedDartMaker
-- RooftopAgility *(iRooftops by illumine partially ported & modified by piggyplugins)*
-- PrayAgainstPlayer *(PrayAgainstPlayer by xKylee ported & modified by piggyplugins)*
-- OneTickSwitcher
-- JadAutoPrayers
-- ItemCombiner
-- HerbCleaner
-- AutoRifts *(Beta / WIP, expect bugs / no pouches atm)*
-- aoewarnings *(OPRS base plugin ported by kotori)*
-- Auto Jug Humidify
-- Cannon Reloader
-- PowerSkiller *Intended to serve as a tutorial plugin for the discord server*
-- Vardorvis Helper
+- CoxHelperExtended - Port of the OpenOSRS CoxHelper plugin modified to work with RuneLite with AutoOlm Prayers *(More features to come)*
+- LizardmanShamans - Port of the OpenOSRS LizardmanShamans plugin modified to work with RuneLite. Spawns will now correctly show the explosion tiles based on shaman location 
 
 # Instructions
-If you already have EthanApiPlugin on your runelite already, it's probably fine to just grab `piggy-plugins-no-ethan-0.6.jar` and drag that into your `sideloaded-plugins` folder.
+- Download the latest `swiper-plugins-0.*`Jar from [releases] and place it into your *sideloaded-plugins* folder
 
-If you don't have EthanApiPlugin then you can grab `piggy-plugins-aio-0.6.jar` and drag that into your `sideloaded-plugins` folder.
+*Requires either `piggy-plugins-no-ethan-0.*.jar` +  `ethans-api-0.*.jar`  Or  `piggy-plugins-aio-0.6.jar` in your `sideloaded-plugins` folder.*
 
 
-[![Donate at ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/0hutch)
