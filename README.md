@@ -13,7 +13,7 @@ https://discord.gg/kwYBYEg4uu
 - LizardmanShamans - Port of the OpenOSRS LizardmanShamans plugin modified to work with RuneLite. Spawns will now correctly show the explosion tiles based on shaman location 
 
 # Instructions
-- Download the latest `swiper-plugins-0.*`Jar from [releases] and place it into your *sideloaded-plugins* folder
+- Download the latest `swiper-plugins-0.*`Jar from [HERE](https://github.com/meangraph/PiggyPlugins/releases/tag/pre-release) and place it into your *sideloaded-plugins* folder
 
 *Requires either `piggy-plugins-no-ethan-0.*.jar` +  `ethans-api-0.*.jar`  Or  `piggy-plugins-aio-0.6.jar` in your `sideloaded-plugins` folder.*
 
