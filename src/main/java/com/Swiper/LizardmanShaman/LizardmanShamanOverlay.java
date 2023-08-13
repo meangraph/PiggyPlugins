@@ -1,6 +1,6 @@
 package com.Swiper.LizardmanShaman;
 
-import com.example.EthanApiPlugin.EthanApiPlugin;
+import com.ethan.EthanApiPlugin.EthanApiPlugin;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
 import net.runelite.api.coords.LocalPoint;
