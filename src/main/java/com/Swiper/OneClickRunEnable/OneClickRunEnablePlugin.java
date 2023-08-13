@@ -1,13 +1,13 @@
 package com.Swiper.OneClickRunEnable;
 
-import com.example.Packets.MousePackets;
-import com.example.Packets.WidgetPackets;
+;
+import com.ethan.Packets.MousePackets;
+import com.ethan.Packets.WidgetPackets;
 import com.google.inject.Provides;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.MenuAction;
-import net.runelite.api.MenuEntry;
 import net.runelite.api.events.ClientTick;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.MenuOptionClicked;
