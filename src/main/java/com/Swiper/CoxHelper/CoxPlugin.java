@@ -28,13 +28,10 @@
 package com.Swiper.CoxHelper;
 
 import com.Swiper.CoxHelper.Utils.CoxUtil;
-import com.example.EthanApiPlugin.EthanApiPlugin;
-import com.example.PacketUtils.PacketUtilsPlugin;
-import com.example.Packets.MousePackets;
-import com.example.Packets.WidgetPackets;
+import com.ethan.Packets.MousePackets;
+import com.ethan.Packets.WidgetPackets;
 import com.google.inject.Provides;
 import com.piggyplugins.PiggyUtils.API.PrayerUtil;
-import com.piggyplugins.PiggyUtils.PiggyUtilsPlugin;
 import com.piggyplugins.PiggyUtils.RLApi.GraphicIDExtended;
 import lombok.AccessLevel;
 import lombok.Getter;

@@ -27,7 +27,6 @@
 package com.Swiper.LizardmanShaman;
 
 
-import com.example.EthanApiPlugin.EthanApiPlugin;
 import com.google.inject.Provides;
 import java.awt.Color;
 import java.util.Objects;
@@ -55,8 +54,6 @@ public class LizardmanShamanPlugin extends Plugin
 {
     private static final String CONFIG_GROUP_NAME = "lizardmanshaman";
 
-    @Inject
-    private EthanApiPlugin api;
     @Getter(AccessLevel.PACKAGE)
     private LizardmanShamanConfig.SpawnOverlayConfig spawnOverlayConfig;
 
