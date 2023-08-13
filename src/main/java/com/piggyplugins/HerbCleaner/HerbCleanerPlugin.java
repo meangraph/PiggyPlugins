@@ -1,20 +1,19 @@
 package com.piggyplugins.HerbCleaner;
 
-import com.example.EthanApiPlugin.Collections.Bank;
-import com.example.EthanApiPlugin.Collections.Inventory;
-import com.example.EthanApiPlugin.Collections.TileObjects;
-import com.example.EthanApiPlugin.Collections.query.TileObjectQuery;
-import com.example.EthanApiPlugin.EthanApiPlugin;
-import com.example.InteractionApi.BankInteraction;
-import com.example.InteractionApi.InventoryInteraction;
-import com.example.InteractionApi.TileObjectInteraction;
-import com.example.PacketUtils.PacketUtilsPlugin;
-import com.example.Packets.MousePackets;
-import com.example.Packets.MovementPackets;
-import com.example.Packets.WidgetPackets;
+import com.ethan.EthanApiPlugin.Collections.Bank;
+import com.ethan.EthanApiPlugin.Collections.Inventory;
+import com.ethan.EthanApiPlugin.Collections.TileObjects;
+import com.ethan.EthanApiPlugin.Collections.query.TileObjectQuery;
+import com.ethan.InteractionApi.BankInteraction;
+import com.ethan.InteractionApi.InventoryInteraction;
+import com.ethan.InteractionApi.TileObjectInteraction;
+import com.ethan.Packets.MousePackets;
+import com.ethan.Packets.MovementPackets;
+import com.ethan.Packets.WidgetPackets;
 import com.google.inject.Inject;
 import com.google.inject.Provides;
-import com.piggyplugins.PiggyUtils.PiggyUtilsPlugin;
+import com.piggyplugins.PiggyUtils.BreakHandler.ReflectBreakHandler;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
@@ -28,8 +27,8 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.input.KeyManager;
 import net.runelite.client.plugins.Plugin;
-import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.util.HotkeyListener;
 
 import java.util.Arrays;
@@ -73,18 +72,28 @@ public class HerbCleanerPlugin extends Plugin {
     private HerbCleanerConfig config;
     @Inject
     private KeyManager keyManager;
-
+    @Inject
+    private OverlayManager overlayManager;
+    @Inject
+    private HerbCleanerOverlay overlay;
+    @Inject
+    private ReflectBreakHandler breakHandler;
+    @Getter
     private boolean started;
 
 
     @Override
     protected void startUp() throws Exception {
         keyManager.registerKeyListener(toggle);
+        overlayManager.add(overlay);
+        breakHandler.registerPlugin(this);
     }
 
     @Override
     protected void shutDown() throws Exception {
         keyManager.unregisterKeyListener(toggle);
+        overlayManager.remove(overlay);
+        breakHandler.unregisterPlugin(this);
     }
 
     @Provides
@@ -95,7 +104,13 @@ public class HerbCleanerPlugin extends Plugin {
     @Subscribe
     private void onGameTick(GameTick event) {
         if (client.getGameState() != GameState.LOGGED_IN
-            || !started) {
+            || !started
+            || breakHandler.isBreakActive(this)) {
+            return;
+        }
+
+        if (breakHandler.shouldBreak(this)) {
+            breakHandler.startBreak(this);
             return;
         }
 
@@ -193,5 +208,10 @@ public class HerbCleanerPlugin extends Plugin {
             return;
         }
         started = !started;
+        if (started) {
+            breakHandler.startPlugin(this);
+        } else {
+            breakHandler.stopPlugin(this);
+        }
     }
 }

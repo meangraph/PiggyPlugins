@@ -1,19 +1,19 @@
 package com.piggyplugins.ItemCombiner;
 
-import com.example.EthanApiPlugin.Collections.Bank;
-import com.example.EthanApiPlugin.Collections.Inventory;
-import com.example.EthanApiPlugin.Collections.TileObjects;
-import com.example.EthanApiPlugin.Collections.query.TileObjectQuery;
-import com.example.EthanApiPlugin.EthanApiPlugin;
-import com.example.InteractionApi.BankInteraction;
-import com.example.InteractionApi.TileObjectInteraction;
-import com.example.PacketUtils.PacketUtilsPlugin;
-import com.example.Packets.MousePackets;
-import com.example.Packets.MovementPackets;
-import com.example.Packets.WidgetPackets;
+import com.ethan.EthanApiPlugin.Collections.Bank;
+import com.ethan.EthanApiPlugin.Collections.Inventory;
+import com.ethan.EthanApiPlugin.Collections.TileObjects;
+import com.ethan.EthanApiPlugin.Collections.query.TileObjectQuery;
+import com.ethan.EthanApiPlugin.EthanApiPlugin;
+import com.ethan.InteractionApi.BankInteraction;
+import com.ethan.InteractionApi.TileObjectInteraction;
+import com.ethan.Packets.MousePackets;
+import com.ethan.Packets.MovementPackets;
+import com.ethan.Packets.WidgetPackets;
 import com.google.inject.Inject;
 import com.google.inject.Provides;
-import com.piggyplugins.PiggyUtils.PiggyUtilsPlugin;
+import com.piggyplugins.PiggyUtils.BreakHandler.ReflectBreakHandler;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
@@ -25,8 +25,8 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.input.KeyManager;
 import net.runelite.client.plugins.Plugin;
-import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
+import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.util.HotkeyListener;
 
 import java.util.Arrays;
@@ -45,6 +45,13 @@ public class ItemCombinerPlugin extends Plugin {
     private ItemCombinerConfig config;
     @Inject
     private KeyManager keyManager;
+    @Inject
+    private OverlayManager overlayManager;
+    @Inject
+    private ItemCombinerOverlay overlay;
+    @Inject
+    private ReflectBreakHandler breakHandler;
+    @Getter
     private boolean started;
     private int afkTicks;
     private boolean deposit;
@@ -57,32 +64,42 @@ public class ItemCombinerPlugin extends Plugin {
 
     @Override
     protected void startUp() throws Exception {
-        isMaking=false;
+        isMaking = false;
         keyManager.registerKeyListener(toggle);
+        overlayManager.add(overlay);
+        breakHandler.registerPlugin(this);
     }
 
     @Override
     protected void shutDown() throws Exception {
-        isMaking=false;
+        isMaking = false;
         keyManager.unregisterKeyListener(toggle);
+        overlayManager.remove(overlay);
+        breakHandler.unregisterPlugin(this);
     }
 
     @Subscribe
     private void onGameTick(GameTick event) {
         if (client.getGameState() != GameState.LOGGED_IN
-            || !started
-            || EthanApiPlugin.isMoving()
-            || client.getLocalPlayer().getAnimation() != -1) {
+                || !started
+                || EthanApiPlugin.isMoving()
+                || client.getLocalPlayer().getAnimation() != -1
+                || breakHandler.isBreakActive(this)) {
             afkTicks = 0;
             return;
         }
-        log.info("Started");
+        //log.info("Started");
 
         if (isMaking) {
-            log.info("Making");
+            //log.info("Making");
             if (isDoneMaking()) {
                 isMaking = false;
             }
+            return;
+        }
+
+        if (breakHandler.shouldBreak(this)) {
+            breakHandler.startBreak(this);
             return;
         }
 
@@ -124,7 +141,7 @@ public class ItemCombinerPlugin extends Plugin {
 
         Widget potionWidget = client.getWidget(17694734);
         if (potionWidget != null && !potionWidget.isHidden()) {
-            log.info("widget visible");
+            //log.info("widget visible");
             MousePackets.queueClickPacket();
             WidgetPackets.queueResumePause(17694734, config.itemTwoAmt());
             isMaking = true;
@@ -198,5 +215,11 @@ public class ItemCombinerPlugin extends Plugin {
             return;
         }
         started = !started;
+
+        if (started) {
+            breakHandler.startPlugin(this);
+        } else {
+            breakHandler.stopPlugin(this);
+        }
     }
 }

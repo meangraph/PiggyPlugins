@@ -3,25 +3,21 @@ package com.piggyplugins.RooftopAgility;
 import com.piggyplugins.PiggyUtils.API.BankUtil;
 import com.piggyplugins.PiggyUtils.API.InventoryUtil;
 import com.piggyplugins.PiggyUtils.BreakHandler.ReflectBreakHandler;
-import com.example.EthanApiPlugin.Collections.Bank;
-import com.example.EthanApiPlugin.Collections.ETileItem;
-import com.example.EthanApiPlugin.Collections.Inventory;
-import com.example.EthanApiPlugin.Collections.TileObjects;
-import com.example.EthanApiPlugin.Collections.Widgets;
-import com.example.EthanApiPlugin.Collections.query.TileObjectQuery;
-import com.example.EthanApiPlugin.EthanApiPlugin;
-import com.example.InteractionApi.BankInteraction;
-import com.example.InteractionApi.InventoryInteraction;
-import com.example.InteractionApi.TileObjectInteraction;
-import com.example.PacketUtils.PacketUtilsPlugin;
-import com.example.Packets.MousePackets;
-import com.example.Packets.MovementPackets;
-import com.example.Packets.ObjectPackets;
-import com.example.Packets.TileItemPackets;
-import com.example.Packets.WidgetPackets;
+import com.ethan.EthanApiPlugin.Collections.Bank;
+import com.ethan.EthanApiPlugin.Collections.ETileItem;
+import com.ethan.EthanApiPlugin.Collections.Inventory;
+import com.ethan.EthanApiPlugin.Collections.TileObjects;
+import com.ethan.EthanApiPlugin.Collections.Widgets;
+import com.ethan.EthanApiPlugin.Collections.query.TileObjectQuery;
+import com.ethan.EthanApiPlugin.EthanApiPlugin;
+import com.ethan.InteractionApi.BankInteraction;
+import com.ethan.InteractionApi.InventoryInteraction;
+import com.ethan.InteractionApi.TileObjectInteraction;
+import com.ethan.Packets.MousePackets;
+import com.ethan.Packets.TileItemPackets;
+import com.ethan.Packets.WidgetPackets;
 import com.google.inject.Inject;
 import com.google.inject.Provides;
-import com.piggyplugins.PiggyUtils.PiggyUtilsPlugin;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
@@ -42,19 +38,14 @@ import net.runelite.api.events.ItemSpawned;
 import net.runelite.api.kit.KitType;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetItem;
-import net.runelite.client.chat.ChatMessageBuilder;
-import net.runelite.client.chat.ChatMessageManager;
-import net.runelite.client.chat.QueuedMessage;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.input.KeyManager;
 import net.runelite.client.plugins.Plugin;
-import net.runelite.client.plugins.PluginDependency;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.util.HotkeyListener;
 
-import java.awt.*;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
@@ -83,9 +74,6 @@ public class RooftopAgilityPlugin extends Plugin {
     private RooftopAgilityOverlay overlay;
     @Inject
     private KeyManager keyManager;
-    @Inject
-    private ChatMessageManager messageManager;
-
     private Player player;
     @Getter
     private State state;
@@ -295,12 +283,9 @@ public class RooftopAgilityPlugin extends Plugin {
     }
 
     private void eatSummerPie() {
-        Optional<Widget> summerPieItem = Inventory.search().filter(item -> item.getItemId() == ItemID.SUMMER_PIE || item.getItemId() == ItemID.HALF_A_SUMMER_PIE).first();
-        if (summerPieItem.isPresent()) {
-            WidgetItem item = (WidgetItem) summerPieItem.get();
-            MousePackets.queueClickPacket();
-            InventoryInteraction.useItem(item.getId(), "Eat");
-        }
+        InventoryUtil.nameContainsNoCase("summer pie").first().ifPresent(item -> {
+            InventoryInteraction.useItem(item, "Eat");
+        });
     }
 
     @Provides
@@ -328,13 +313,6 @@ public class RooftopAgilityPlugin extends Plugin {
     private void onGameTick(GameTick event) {
         player = client.getLocalPlayer();
         if (player == null || !startAgility || !REGION_IDS.contains(client.getLocalPlayer().getWorldLocation().getRegionID()) || breakHandler.isBreakActive(this)) {
-            return;
-        }
-        if (!client.isResized()) {
-            ChatMessageBuilder builder = new ChatMessageBuilder();
-            builder.append(Color.RED, "You must be set to resizable mode to use Void Agility.");
-            String msg = builder.build();
-            messageManager.queue(QueuedMessage.builder().name("VoidAgility").runeLiteFormattedMessage(msg).build());
             return;
         }
         marksPerHour = (int) getMarksPH();
