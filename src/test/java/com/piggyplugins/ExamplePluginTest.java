@@ -1,6 +1,7 @@
 package com.piggyplugins;
 
 import com.Swiper.CoxHelper.CoxPlugin;
+import com.Swiper.OneClickRunEnable.OneClickRunEnablePlugin;
 import com.example.EthanApiPlugin.EthanApiPlugin;
 import com.example.PacketUtils.PacketUtilsPlugin;
 import net.runelite.client.RuneLite;

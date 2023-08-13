@@ -106,8 +106,6 @@ public class CoxPlugin extends Plugin
     private MousePackets mousePackets;
     @Inject
     private WidgetPackets widgetPackets;
-    @Inject
-    private EthanApiPlugin api;
     //other
     private int vanguards;
     private boolean tektonActive;
