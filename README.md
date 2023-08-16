@@ -5,8 +5,8 @@ Fork of PiggyPlugins which is a fork of EthanVann's EthanApiPlugin
 https://discord.gg/kwYBYEg4uu
 
 
-# Release 0.1
-*Updated 10/AUG/2023*
+# Release 0.2
+*Updated 17/AUG/2023*
 
 **Plugins**:
 - CoxHelperExtended - Port of the OpenOSRS CoxHelper plugin modified to work with RuneLite with AutoOlm Prayers *(More features to come)*
