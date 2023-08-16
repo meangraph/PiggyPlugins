@@ -31,10 +31,8 @@ import java.util.Optional;
         tags = {"swiper", "Swiper"},
         enabledByDefault = false
 )
-
 @Slf4j
-public class OneClickCoinPouchOpenerPlugin extends Plugin
-{
+public class OneClickCoinPouchOpenerPlugin extends Plugin {
     @Inject
     private OneClickCoinPouchOpenerConfig config;
 
@@ -45,78 +43,70 @@ public class OneClickCoinPouchOpenerPlugin extends Plugin
     private ConfigManager configManager;
 
     @Provides
-    OneClickRunEnableConfig provideConfig(ConfigManager configManager)
-    {
-        return configManager.getConfig(OneClickRunEnableConfig.class);
+    OneClickCoinPouchOpenerConfig provideConfig(ConfigManager configManager) {
+        return configManager.getConfig(OneClickCoinPouchOpenerConfig.class);
     }
 
     @Override
-    protected void startUp()
-    {
-    }
+    protected void startUp() {}
 
     @Override
-    protected void shutDown()
-    {
-    }
+    protected void shutDown() {}
 
-    boolean clicked;
+    private boolean clicked;
 
     @Subscribe
-    private void onClientTick(ClientTick event)
-    {
+    private void onClientTick(ClientTick event) {
         if (client.getLocalPlayer() == null
                 || client.getGameState() != GameState.LOGGED_IN
                 || client.isMenuOpen()
-                || client.getWidget(378,78) != null)//login button
+                || client.getWidget(378, 78) != null) {
             return;
+        }
 
-        if (hasPouch() && !clicked && getPouchCount());
-        {
-
+        // If pouches are present and their count meets the criteria, and hasn't been clicked yet.
+        if (hasMinimumPouches() && !clicked) {
             this.client.createMenuEntry(this.client.getMenuEntries().length)
                     .setOption("One Click Pouch Opener")
                     .setTarget("")
-                    .setType(MenuAction.CC_OP)
+                    .setType(MenuAction.RUNELITE_HIGH_PRIORITY)
                     .setIdentifier(0)
-                    .onClick((e) -> {
-                        clicked = true;
-                    });
-
+                    .onClick((e) -> clicked = true);
         }
     }
 
     @Subscribe
-    private void onMenuOptionClicked(MenuOptionClicked event)
-    {
-        if (event.getMenuOption().equals("One Click Pouch Opener"))
-        {
+    private void onMenuOptionClicked(MenuOptionClicked event) {
+        if (event.getMenuOption().equals("One Click Pouch Opener")) {
             openPouches();
         }
     }
 
-    public boolean hasPouch() {
-        return !Inventory.search().nameContains("Coin pouch").empty();
-    }
-
-    public boolean getPouchCount() {
-        boolean y = Inventory.search().nameContains("Coin pouch").quantityGreaterThan(config.minimumCoinPouch()-1).empty();
-        return y;
-    }
-
     @Subscribe
-    private void onGameTick(GameTick event)
-    {
+    private void onGameTick(GameTick event) {
         clicked = false;
     }
 
-    public void openPouches() {
-        Optional<Widget> coinPouch = Inventory.search().nameContains("Coin pouch").first();
+    private Optional<Widget> getCoinPouchWidget() {
+        return Inventory.search().nameContains("Coin pouch").first();
+    }
+
+    private boolean hasMinimumPouches() {
+        Optional<Widget> coinPouch = getCoinPouchWidget();
+
+        if (coinPouch.isPresent()) {
+            return coinPouch.get().getItemQuantity() >= config.minimumCoinPouch();
+        }
+        return false;
+    }
+
+    private void openPouches() {
+        Optional<Widget> coinPouch = getCoinPouchWidget();
 
         if (coinPouch.isPresent()) {
             MousePackets.queueClickPacket();
             InventoryInteraction.useItem(coinPouch.get(), "Open-All");
+            clicked = false;
         }
     }
-
 }

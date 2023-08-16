@@ -93,6 +93,62 @@ task Swiperjar(type: Jar) {
     with jar
 }
 
+task CoxHelperExtendedJar(type: Jar) {
+    manifest {
+    }
+    baseName = 'cox-helper-extended'
+    archiveVersion = '0.2'
+    exclude("com/ethan")
+    exclude("com/piggyplugins")
+    exclude("com/Swiper/LizardmanShaman")
+    exclude("com/Swiper/OneClickCoinPouchOpener")
+    exclude("com/Swiper/OneClickRunEnable")
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+task LizardmanShamanJar(type: Jar) {
+    manifest {
+    }
+    baseName = 'LizardmanShaman'
+    archiveVersion = '0.2'
+    exclude("com/ethan")
+    exclude("com/piggyplugins")
+    exclude("com/Swiper/CoxHelper")
+    exclude("com/Swiper/OneClickCoinPouchOpener")
+    exclude("com/Swiper/OneClickRunEnable")
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+task OneClickCoinPouchOpenerJar(type: Jar) {
+    manifest {
+    }
+    baseName = 'OneClickCoinPouchOpener'
+    archiveVersion = '0.2'
+    exclude("com/ethan")
+    exclude("com/piggyplugins")
+    exclude("com/Swiper/CoxHelper")
+    exclude("com/Swiper/LizardmanShaman")
+    exclude("com/Swiper/OneClickRunEnable")
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+task OneClickRunEnableJar(type: Jar) {
+    manifest {
+    }
+    baseName = 'One Click Run Enable'
+    archiveVersion = '0.2'
+    exclude("com/ethan")
+    exclude("com/piggyplugins")
+    exclude("com/Swiper/CoxHelper")
+    exclude("com/Swiper/LizardmanShaman")
+    exclude("com/Swiper/OneClickCoinPouchOpener")
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
