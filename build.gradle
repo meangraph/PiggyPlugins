@@ -27,9 +27,6 @@ dependencies {
     implementation("com.google.archivepatcher:archive-patch-applier:1.0.4")
     implementation("org.benf:cfr:0.152")
     implementation 'io.reactivex.rxjava3:rxjava:3.1.6'
-    implementation 'org.codehaus.janino:janino:3.1.6'
-    implementation 'org.ow2.asm:asm:9.4'
-    implementation 'net.bytebuddy:byte-buddy-agent:1.14.2'
     implementation group: 'com.google.inject.extensions', name: 'guice-multibindings', version: '4.1.0', {
         exclude group: 'com.google.inject'
     }
@@ -88,8 +85,8 @@ task Swiperjar(type: Jar) {
     manifest {
     }
     baseName = 'swiper-plugins'
-    archiveVersion = '0.1'
-    exclude("com/example")
+    archiveVersion = '0.2'
+    exclude("com/ethan")
     exclude("com/piggyplugins")
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
