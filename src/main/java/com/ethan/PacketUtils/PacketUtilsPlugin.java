@@ -24,7 +24,16 @@ import org.benf.cfr.reader.Main;
 
 import javax.inject.Inject;
 import javax.swing.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -32,7 +41,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 import java.util.jar.JarFile;
 import java.util.stream.Collectors;
 
@@ -56,7 +70,7 @@ public class PacketUtilsPlugin extends Plugin {
     ClientThread thread;
     public static Method addNodeMethod;
     public static boolean usingClientAddNode = false;
-    public static final int CLIENT_REV = 215;
+    public static final int CLIENT_REV = 216;
     private static boolean loaded = false;
     @Inject
     private PluginManager pluginManager;
@@ -89,12 +103,6 @@ public class PacketUtilsPlugin extends Plugin {
     @Override
     @SneakyThrows
     public void startUp() {
-        Thread updateThread = new Thread(() ->
-        {
-            setupRuneliteUpdateHandling(RuneLiteProperties.getVersion());
-            cleanup();
-        });
-        updateThread.start();
         staticClient = client;
         if (client.getRevision() != CLIENT_REV) {
             SwingUtilities.invokeLater(() ->
@@ -110,6 +118,12 @@ public class PacketUtilsPlugin extends Plugin {
             });
             return;
         }
+        Thread updateThread = new Thread(() ->
+        {
+            setupRuneliteUpdateHandling(RuneLiteProperties.getVersion());
+            cleanup();
+        });
+        updateThread.start();
         thread.invoke(() ->
         {
             if (client.getGameState() != null && client.getGameState() == GameState.LOGGED_IN) {
@@ -150,8 +164,8 @@ public class PacketUtilsPlugin extends Plugin {
     @SneakyThrows
     public void setupRuneliteUpdateHandling(String version) {
         Path codeSource = RuneLite.RUNELITE_DIR.toPath().resolve("PacketUtils");
-        if (Files.exists(codeSource.resolve(version + ".txt"))) {
-            List<String> lines = Files.readAllLines(codeSource.resolve(version + ".txt"));
+        if (Files.exists(codeSource.resolve(version+"-"+client.getRevision() + ".txt"))) {
+            List<String> lines = Files.readAllLines(codeSource.resolve(version+"-"+client.getRevision() + ".txt"));
             if (lines.size() < 2) {
                 return;
             }
@@ -277,7 +291,7 @@ public class PacketUtilsPlugin extends Plugin {
                 stringOutput.append(usingClientAddNode);
                 stringOutput.append("\n");
                 stringOutput.append(mostUsedMethod);
-                Files.write(Files.createFile(codeSource.resolve(version + ".txt")), stringOutput.toString().getBytes(StandardCharsets.UTF_8));
+                Files.write(Files.createFile(codeSource.resolve(version+"-"+client.getRevision() + ".txt")), stringOutput.toString().getBytes(StandardCharsets.UTF_8));
                 break;
             }
         }
